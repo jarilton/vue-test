@@ -17,6 +17,16 @@ test('Emite um lance quando o valor for maior do que zero', () => {
       wrapper.trigger("submit")
       const lancesEmitidos = wrapper.emitted("novo-lance")
       expect(lancesEmitidos).toHaveLength(1)
+})
 
-      console.log("lancesEmitidos",lancesEmitidos)
+test('Emite o valor esperado de um lance válido', () => {
+      const wrapper = mount(Lance)
+      const input = wrapper.find("input")
+      input.setValue(100)
+      wrapper.trigger("submit")
+      const lancesEmitidos = wrapper.emitted("novo-lance")
+
+      const lances = parseInt(lancesEmitidos, [0][0])
+      expect(lances).toBe(100)
+
 })
