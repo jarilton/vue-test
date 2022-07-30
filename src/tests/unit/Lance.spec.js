@@ -54,8 +54,23 @@ describe("Um lance com valor minimo", () => {
             input.setValue(400)
             wrapper.trigger("submit")
             const lancesEmitidos = wrapper.emitted("novo-lance")
-            
-            const valorDoLance  = parseInt(lancesEmitidos[0][0])
+
+            const valorDoLance = parseInt(lancesEmitidos[0][0])
             expect(valorDoLance).toBe(400)
+      })
+
+      test("Não são aceitos lances com valores menores do que o minimo informado", async () => {
+            const wrapper = mount(Lance, {
+                  propsData: {
+                        lanceMinimo: 300,
+                  }
+            })
+            const input = wrapper.find("input")
+            input.setValue(100)
+            wrapper.trigger("submit")
+
+            await wrapper.vm.$nextTick()
+            const msgError = wrapper.find("p.alert").element
+            expect(msgError).toBeTruthy()
       })
 })
